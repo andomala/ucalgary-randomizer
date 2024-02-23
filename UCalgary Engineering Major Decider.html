@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UCalgary Engineering Major Decider</title>
+<style>
+  body {
+    font-family: 'Comic Sans MS', cursive;
+    text-align: center;
+    background-color: #ffdab9; 
+    padding: 20px;
+    opacity: 0;
+    animation: fadeIn 0.33s ease forwards;
+    position: relative; 
+  }
+
+  @keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+
+  #result {
+    font-size: 40px;
+    margin-top: 50px;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    border-radius: 20px;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); 
+    position: relative;
+    animation: bounce 0.5s infinite alternate;
+  }
+
+  @keyframes bounce {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-10px); }
+  }
+
+  #engineering {
+    font-size: 60px;
+    margin-top: 20px;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    animation: pulse 1.5s infinite alternate;
+  }
+
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.1); }
+  }
+
+  #emoji {
+    font-size: 60px;
+    opacity: 0;
+    transition: opacity 0.5s ease, transform 0.3s ease;
+  }
+
+  #button {
+    font-size: 28px;
+    padding: 20px 40px;
+    margin-top: 40px;
+    margin-bottom: 20px; 
+    background-color: #ffb6c1; 
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 30px;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease; 
+    box-shadow: 0 5px 15px rgba(255, 182, 193, 0.4); 
+    animation: floatButton 2s infinite ease-in-out;
+  }
+
+  @keyframes floatButton {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  #button:hover {
+    background-color: #ff99cc;
+    transform: scale(1.05);
+  }
+
+  #button:active {
+    box-shadow: 0 2px 5px rgba(255, 182, 193, 0.2); 
+  }
+
+  .loader-container {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8); 
+    z-index: 9999;
+  }
+
+  .loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    height: 30px;
+    background-color: #fff;
+    border-radius: 15px;
+    overflow: hidden;
+  }
+
+  .loader-bar {
+    height: 100%;
+    background-color: #ffb6c1; 
+    border-radius: 15px;
+    animation: progress 2s linear forwards;
+  }
+
+  @keyframes progress {
+    0% { width: 0; }
+    100% { width: 100%; }
+  }
+
+  @keyframes fireworks {
+    0% { opacity: 1; }
+    100% { transform: translateY(-1000px) scale(2); opacity: 0; }
+  }
+
+  .firework {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: #ffb6c1;
+    border-radius: 50%;
+    animation: fireworks 2s ease-out forwards;
+  }
+
+  @keyframes spin {
+  0% {
+    transform: rotate(0deg) scale(1) translateY(0);
+    filter: hue-rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg) scale(1) translateY(0);
+    filter: hue-rotate(360deg);
+  }
+}
+
+  .bubble {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: rgba(255, 255, 255, 0.6);
+    border-radius: 50%;
+    animation: float 4s infinite ease-in-out;
+    bottom: -40px; /* Adjusted for positioning */
+  }
+
+  @keyframes float {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0); }
+  }
+
+  .invisible {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+</style>
+</head>
+<body>
+
+<div id="result">Your fate awaits...</div>
+<div id="engineering"></div>
+<div id="emoji"></div>
+<button id="button" onclick="startLoading()">Decide your fate?</button>
+<div class="loader-container">
+  <div class="loader">
+    <div class="loader-bar"></div>
+  </div>
+</div>
+
+<iframe class="invisible" width="1" height="1" src="https://www.youtube.com/embed/yyjUmv1gJEg?si=S9BEsiq64SMqZdqH&autoplay=1" frameborder="0" allowfullscreen></iframe>
+
+<script>
+function startLoading() {
+  document.getElementById("button").innerText = "Deciding your fate...";
+  document.querySelector(".loader-container").style.display = "block";
+  setTimeout(rollFate, 1700); 
+}
+
+function rollFate() {
+  // Engineering options
+  var engineeringList = [
+    { name: "Geomatics Engineering", emoji: "🗺️", color: "#ffdab9" }, /* PeachPuff */
+    { name: "Electrical Engineering", emoji: "⚡", color: "#ffff00" }, /* Yellow */
+    { name: "Software Engineering", emoji: "💻", color: "#afb6c1" }, /* Light Pink */
+    { name: "Civil Engineering", emoji: "🏗️", color: "#b0e0e6" }, /* PowderBlue */
+    { name: "Mechanical Engineering", emoji: "⚙️", color: "#98fb98" }, /* PaleGreen */
+    { name: "Sustainable Systems Engineering", emoji: "🌱", color: "#90ee90" }, /* Light Green */
+    { name: "Chemical Engineering", emoji: "⚗️", color: "#ffe4b5" }, /* Moccasin */
+    { name: "Biomedical Engineering", emoji: "⚕️", color: "#87ceeb" }, /* SkyBlue */
+    { name: "Physics Engineering", emoji: "🔭", color: "#800080" } /* Purple */
+  ];
+
+  // Randomly select an engineering
+  var randomIndex = Math.floor(Math.random() * engineeringList.length);
+  var selectedEngineering = engineeringList[randomIndex];
+
+  // Display result
+  document.getElementById("result").innerText = "Congratulations first year UCalgary student, you are going into...";
+  document.getElementById("engineering").innerText = selectedEngineering.name;
+  document.getElementById("emoji").innerText = selectedEngineering.emoji;
+  document.getElementById("result").style.opacity = 1;
+  document.getElementById("engineering").style.opacity = 1;
+  document.getElementById("emoji").style.opacity = 1;
+  document.getElementById("emoji").style.animation = "spin 0.5s linear";
+  setTimeout(function() {
+    document.getElementById("emoji").style.animation = "none";
+  }, 500); 
+  document.body.style.backgroundColor = selectedEngineering.color;
+
+ 
+  document.getElementById("result").scrollIntoView({ behavior: 'smooth' });
+
+
+  for (let i = 0; i < 30; i++) {
+    createFirework();
+  }
+
+
+  for (let i = 0; i < 10; i++) {
+    createBubble();
+  }
+
+
+  document.querySelector(".loader-container").style.display = "none";
+
+
+  document.getElementById("button").innerText = "Roll your fate again?";
+}
+
+function createFirework() {
+  var firework = document.createElement("div");
+  firework.classList.add("firework");
+  firework.style.left = Math.random() * window.innerWidth + "px";
+  firework.style.top = Math.random() * window.innerHeight + "px";
+  document.body.appendChild(firework);
+}
+
+function createBubble() {
+  var bubble = document.createElement("div");
+  bubble.classList.add("bubble");
+  bubble.style.left = Math.random() * window.innerWidth + "px";
+  bubble.style.bottom = "-40px"; 
+  document.body.appendChild(bubble);
+}
+</script>
+
+</body>
+</html>
